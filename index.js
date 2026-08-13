@@ -1,5 +1,6 @@
 const express = require('express')
-const { chromium } = require('playwright')
+const { chromium: playwrightChromium } = require('playwright-core')
+const chromium = require('@sparticuz/chromium')
 
 const app = express()
 app.use(express.json({ limit: '5mb' }))
@@ -168,22 +169,22 @@ async function extractProductInfo(page, url) {
 async function scrapeProduct(url) {
   let browser = null
   try {
-    browser = await chromium.launch({
-      headless: true,
+    browser = await playwrightChromium.launch({
       args: [
+        ...chromium.args,
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
         '--disable-accelerated-2d-canvas',
         '--disable-gpu',
-        '--single-process',
-        '--no-zygote',
         '--window-size=1280,720'
-      ]
+      ],
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless
     })
 
     const context = await browser.newContext({
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
       viewport: { width: 1280, height: 720 },
       locale: 'zh-CN',
       timezoneId: 'Asia/Shanghai'
@@ -253,5 +254,5 @@ app.post('/scrape', authMiddleware, async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Scraper service running on port ${PORT}`)
-  console.log(`API_KEY: ${API_KEY}`)
+  console.log(`API_KEY loaded: ${API_KEY ? API_KEY.slice(0, 4) + '****' : 'NOT SET'}`)
 })
