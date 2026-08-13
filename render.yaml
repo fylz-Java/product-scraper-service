@@ -2,7 +2,7 @@ services:
   - type: web
     name: product-scraper-service
     env: node
-    buildCommand: npm install && npx playwright install chromium
+    buildCommand: npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV
