@@ -180,7 +180,7 @@ async function scrapeProduct(url) {
         '--window-size=1280,720'
       ],
       executablePath: await chromium.executablePath(),
-      headless: chromium.headless
+      headless: true
     })
 
     const context = await browser.newContext({
