@@ -1,0 +1,17 @@
+{
+  "name": "product-scraper-service",
+  "version": "1.0.0",
+  "description": "Headless browser scraper for e-commerce product pages",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "playwright": "^1.40.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
