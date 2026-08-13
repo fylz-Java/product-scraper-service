@@ -71,7 +71,7 @@ async function extractProductInfo(page, url) {
   const skuId = extractJdSku(url)
   const itemId = extractTbItemId(url)
 
-  const result = await page.evaluate((platform, skuId, itemId) => {
+  const result = await page.evaluate(({ platform, skuId, itemId }) => {
     const data = {
       title: '',
       description: '',
@@ -160,7 +160,7 @@ async function extractProductInfo(page, url) {
     }
 
     return data
-  }, platform, skuId, itemId)
+  }, { platform, skuId, itemId })
 
   return result
 }
