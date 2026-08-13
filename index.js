@@ -208,9 +208,6 @@ async function scrapeProduct(url) {
 
     const page = await context.newPage()
 
-
-    const page = await context.newPage()
-
     // 拦截图片/字体/CSS 加速加载（可选）
     await page.route(/\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|css)$/, route => route.abort())
 
